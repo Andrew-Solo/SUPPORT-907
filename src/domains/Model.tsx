@@ -1,7 +1,7 @@
 import {v4 as uuid} from "uuid";
 import {action, computed, makeObservable, observable} from "mobx";
 import DomainProvider from "../data/DomainProvider";
-import {client} from "../data";
+import {client, providerType} from "../data";
 import Result from "../data/Result";
 import Message from "../data/Message";
 
@@ -133,7 +133,7 @@ export default class Model<TModel extends Model<TModel, TData>, TData extends Mo
     this.data.updated = data.updated ?? this.data.created;
     this.data.name = data.name ?? this.data.id.replace(/-/g, '');
 
-    this.provider = new DomainProvider<TData>(client.host, this.resource);
+    this.provider = new providerType<TData>(client.host, this.resource);
 
     this.onCreated = callbacks.onCreated ?? (() => {});
     this.onUpdated = callbacks.onUpdated ?? (() => {});

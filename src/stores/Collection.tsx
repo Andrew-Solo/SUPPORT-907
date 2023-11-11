@@ -3,7 +3,7 @@ import DomainProvider from "../data/DomainProvider";
 import Result from "../data/Result";
 import Message from "../data/Message";
 import Model, {ModelCallbacks, ModelData} from "../domains/Model";
-import {client} from "../data";
+import {client, providerType} from "../data";
 
 export default class Collection<TModel extends Model<TModel, TData>, TData extends ModelData> {
   readonly provider: DomainProvider<TData>
@@ -82,7 +82,7 @@ export default class Collection<TModel extends Model<TModel, TData>, TData exten
   }
 
   constructor(resource: string, type: new (data: TData, callbacks: Partial<ModelCallbacks<TModel, TData>>) => TModel, callbacks: Partial<ModelCallbacks<TModel, TData>> = {}) {
-    this.provider = new DomainProvider<TData>(client.host, resource);
+    this.provider = new providerType<TData>(client.host, resource);
 
     this.type = type;
     this.modelCallbacks = callbacks;
